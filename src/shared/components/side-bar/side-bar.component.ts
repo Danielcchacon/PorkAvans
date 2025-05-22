@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2  } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 
 
 export class SideBarComponent {
-
+  
+  isClosed = false;
   isTrendsSubmenuOpen = false;
   isAfiliadoSubmenuOpen = false;
   isUsersSubmenuOpen = false;
@@ -19,8 +20,37 @@ export class SideBarComponent {
   isCollapsed = false;
   userRole: string = '';  // Agregar propiedad para el rol
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private el: ElementRef, private renderer: Renderer2) {
     this.getUserRole();  // Obtener el rol del usuario al iniciar el componente
+  }
+  ngOnInit(): void {
+    const trigger = this.el.nativeElement.querySelector('.hamburger');
+    const overlay = this.el.nativeElement.querySelector('.overlay');
+    const toggleBtn = this.el.nativeElement.querySelector('[data-toggle="offcanvas"]');
+    const wrapper = this.el.nativeElement.querySelector('#wrapper');
+
+    // Evento click del botón hamburguesa
+    this.renderer.listen(trigger, 'click', () => {
+      if (this.isClosed) {
+        this.renderer.setStyle(overlay, 'display', 'none');
+        this.renderer.removeClass(trigger, 'is-open');
+        this.renderer.addClass(trigger, 'is-closed');
+      } else {
+        this.renderer.setStyle(overlay, 'display', 'block');
+        this.renderer.removeClass(trigger, 'is-closed');
+        this.renderer.addClass(trigger, 'is-open');
+      }
+      this.isClosed = !this.isClosed;
+    });
+
+    // Evento click para toggle del wrapper
+    this.renderer.listen(toggleBtn, 'click', () => {
+      if (wrapper.classList.contains('toggled')) {
+        this.renderer.removeClass(wrapper, 'toggled');
+      } else {
+        this.renderer.addClass(wrapper, 'toggled');
+      }
+    });
   }
 
   getUserRole() {
@@ -87,6 +117,12 @@ export class SideBarComponent {
         console.error('Error durante la navegación:', error);
       });
   }
+
+  toggleSidebar() {
+    this.isClosed = !this.isClosed;
+    this.isCollapsed = !this.isCollapsed;
+  }
+  
 
 
   navigateToComidaSuministrada() {
