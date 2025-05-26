@@ -12,14 +12,21 @@
             <li><a (click)="navigateToDashboard()">Dashboard</a></li>
 
             <li class="nav-item dropdown" *ngIf="userRole && userRole.includes('ADMIN')">
-                <a class="nav-link dropdown-toggle" href="#" role="button" (click)="toggleUserSubmenu()">
-                    Users
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                    (click)="toggleUserSubmenu(); $event.preventDefault()">
+                    Gestion de Usuarios
                 </a>
                 <ul *ngIf="isUsersSubmenuOpen" class="dropdown-menu show">
-                    <li><a class="dropdown-item" (click)="navigateToViewAdministrador()">Distribuidores</a></li>
-                    <li><a class="dropdown-item" (click)="navigateToViewuser()">Usuarios</a></li>
+                    <li>
+                        <a class="dropdown-item" (click)="navigateToViewAdministrador()">Distribuidores</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" (click)="navigateToViewuser()">Usuarios</a>
+                    </li>
                 </ul>
             </li>
+
+
 
 
 
