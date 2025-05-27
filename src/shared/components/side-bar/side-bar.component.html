@@ -18,11 +18,12 @@
                 </a>
                 <ul *ngIf="isUsersSubmenuOpen" class="dropdown-menu show">
                     <li>
-                        <a class="dropdown-item" (click)="navigateToViewAdministrador()">Distribuidores</a>
+                        <a class="dropdown-item no-hover" (click)="navigateToViewAdministrador()">Distribuidores</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" (click)="navigateToViewuser()">Usuarios</a>
+                        <a class="dropdown-item no-hover" (click)="navigateToViewuser()">Usuarios</a>
                     </li>
+
                 </ul>
             </li>
 
@@ -30,33 +31,47 @@
 
 
 
-            <li class="dropdown">
-                <a (click)="toggleTrendsSubmenu()">Trends <span class="caret"></span></a>
-                <ul *ngIf="isTrendsSubmenuOpen" class="dropdown-menu animated fadeInLeft">
-                    <li><a (click)="navigateTorecoleccion()">Productos Recolectados</a></li>
-                    <li><a (click)="navigateToComidaSuministrada()">Comida Suministrada</a></li>
-                    <li><a (click)="navigateToStockproductos()">Stock</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" (click)="toggleTrendsSubmenu()" role="button">
+                    Estadisticas
+                </a>
+                <ul *ngIf="isTrendsSubmenuOpen" class="dropdown-menu show">
+                    <li><a class="dropdown-item" (click)="navigateTorecoleccion()">Productos Recolectados</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToComidaSuministrada()">Comida Suministrada</a></li>
+
+                    <li><a class="dropdown-item" (click)="navigateToStockproductos()">Stock</a></li>
                 </ul>
             </li>
 
-            <li class="dropdown">
-                <a (click)="toggleAfiliadoSubmenu()">Afiliados <span class="caret"></span></a>
-                <ul *ngIf="isAfiliadoSubmenuOpen" class="dropdown-menu animated fadeInLeft">
-                    <li><a (click)="navigateToAddProductSale()">Mis Productos</a></li>
-                    <li><a (click)="navigateToViewProductsSale()">Productos en venta</a></li>
-                    <li><a (click)="navigateToStockproductos()">Stock</a></li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" (click)="toggleAfiliadoSubmenu(); $event.preventDefault()"
+                    role="button">
+                    Afiliado <span class="caret"></span>
+                </a>
+                <ul *ngIf="isAfiliadoSubmenuOpen" class="dropdown-menu show animated fadeInLeft">
+                    <li><a class="dropdown-item" (click)="navigateToAddProductSale()">Catalogo</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToViewProductsSale()">Productos en venta</a></li>
+                    <!-- <li><a class="dropdown-item" (click)="navigateToStockproductos()">Stock</a></li> -->
                 </ul>
             </li>
 
-            <li class="dropdown">
-                <a (click)="toggleVentasSubmenu()">Ventas <span class="caret"></span></a>
-                <ul *ngIf="isVentasSubmenuOpen" class="dropdown-menu animated fadeInLeft">
-                    <li><a (click)="navigateToViewPresale()">Pre Ventas</a></li>
-                    <li><a (click)="navigateToViewSale()">Histórico de Ventas</a></li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" (click)="toggleVentasSubmenu(); $event.preventDefault()"
+                    role="button">
+                    Ventas <span class="caret"></span>
+                </a>
+                <ul *ngIf="isVentasSubmenuOpen" class="dropdown-menu show animated fadeInLeft">
+                    <li><a class="dropdown-item" (click)="navigateToViewPresale()">Pre Ventas</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToViewSale()">Histórico de Ventas</a></li>
+                    <li><a class="dropdown-item" (click)="redirectToAddProductSale()">Agregar Venta</a></li>
+                    <li><a class="dropdown-item" (click)="redirectToAddCommission()">Agregar Comision</a></li>
                 </ul>
             </li>
 
-            <li><a (click)="navigateTocollection()">Colección</a></li>
+
+            <!-- <li><a (click)="navigateTocollection()">Colección</a></li> -->
             <li><a (click)="logout()">Cerrar sesión</a></li>
         </ul>
     </nav>

@@ -78,7 +78,7 @@ html {
   width: 220px;
   margin: 0;
   padding: 0;
-  list-style: none;
+  // list-style: none;
 }
 
 .sidebar-nav li {
@@ -181,6 +181,30 @@ html {
   color: #fff;
   text-decoration: none;
 }
+.dropdown-item{
+  color: #fff;
+}
+
+.dropdown-item:hover{
+  background-color: #7edbb0;
+}
+
+.dropdown-item.no-hover:hover {
+  background-color: inherit; /* o el color de fondo normal */
+  cursor: pointer;
+}
+
+.dropdown-menu li {
+  list-style-type: circle !important;
+}
+/* Aplica a todos los elementos li dentro de dropdown-menu */
+.dropdown-menu li {
+  list-style-type: circle; /* Cambia a circulito */
+  list-style-position: inside; /* Opcional: alinea el círculo con el texto */
+  padding-left: 1rem; /* Asegura que haya espacio entre el círculo y el texto */
+}
+
+
 
 .dropdown-header {
   text-align: center;
@@ -406,15 +430,15 @@ a[href*="#followme"]::before {
 /*            Overlay            */
 /*-------------------------------*/
 
-.overlay {
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(250, 250, 250, .8);
-  z-index: 1;
-}
+// .overlay {
+//   position: fixed;
+//   display: none;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background-color: rgba(250, 250, 250, .8);
+//   z-index: 1;
+// }

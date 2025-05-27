@@ -6,6 +6,7 @@ import { GestionColeccionRoutingModule } from './gestion-coleccion-routing.modul
 import { AddProductSaleComponent } from './add-product-sale/add-product-sale.component';
 import { AddCommissionComponent } from './add-commission/add-commission.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     GestionColeccionRoutingModule,
     FormsModule,
     MatSnackBarModule,
+    SharedModule,
     ReactiveFormsModule 
   ]
 })

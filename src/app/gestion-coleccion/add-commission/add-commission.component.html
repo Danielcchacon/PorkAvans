@@ -1,33 +1,33 @@
+<app-side-bar></app-side-bar>
 <div class="product-banner">
-    <img src="assets/image/logo.png" alt="Logo" class="logo"> <!-- Imagen del logo -->
-    PorkAvans
+  <img src="assets/image/logo.png" alt="Logo" class="logo"> <!-- Imagen del logo -->
+  PorkAvans
 </div>
 
 <div class="form-container">
-    <h2>Crear Comisión</h2>
-  
-    <form [formGroup]="commissionForm" (ngSubmit)="onSubmit()">
-        <select id="commissionType" formControlName="commissionType">
-            <option *ngFor="let type of commissionTypes" [value]="type.commission_type_id">
-              {{ type.commission_type_description }}
-            </option>
-          </select>        
-          
-  
-      <div class="form-group">
-        <label for="description">Descripción</label>
-        <input id="description" formControlName="description" type="text" />
-      </div>
-  
-      <div class="form-group">
-        <label for="value">Valor</label>
-        <input id="value" formControlName="value" type="number" />
-      </div>
-  
-      <div class="form-actions">
-        <button type="submit" class="btn-primary" [disabled]="commissionForm.invalid">Guardar</button>
-        <button type="button" class="btn-secondary" (click)="location.back()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-  
+  <h2>Crear Comisión</h2>
+
+  <form [formGroup]="commissionForm" (ngSubmit)="onSubmit()">
+    <select id="commissionType" formControlName="commissionType">
+      <option *ngFor="let type of commissionTypes" [value]="type.commission_type_id">
+        {{ type.commission_type_description }}
+      </option>
+    </select>
+
+
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <input id="description" formControlName="description" type="text" />
+    </div>
+
+    <div class="form-group">
+      <label for="value">Valor</label>
+      <input id="value" formControlName="value" type="number" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="commissionForm.invalid">Guardar</button>
+      <button type="button" class="btn-secondary" (click)="location.back()">Cancelar</button>
+    </div>
+  </form>
+</div>

@@ -5,6 +5,7 @@ import { AuthService } from '../../auth.service'; // Asegúrate de importar el s
 import { ProductCategorySale } from '../../auth.service'; // Importar interfaz
 import { CommissionResponse } from '../../auth.service'; // Importar interfaz
 
+
 @Component({
   selector: 'app-add-product-sale',
   templateUrl: './add-product-sale.component.html',
@@ -62,7 +63,8 @@ export class AddProductSaleComponent implements OnInit {
 
   // Función que se llama cuando se hace click en "Cancelar"
   onCancel(): void {
-    this.router.navigate(['/collection-dashboard']);
+    this.router.navigate(['/dashboard']);
+
   }
 
   // Función de submit (guardar)
@@ -73,7 +75,7 @@ export class AddProductSaleComponent implements OnInit {
       (response) => {
         console.log('Producto creado con éxito:', response);
         // Redirigir o mostrar un mensaje de éxito, por ejemplo:
-        this.router.navigate(['/collection-dashboard']);  // Suponiendo que tienes una ruta que lista productos
+        this.router.navigate(['/dashboard']);  // Suponiendo que tienes una ruta que lista productos
       },
       (error) => {
         console.error('Error al crear el producto:', error);

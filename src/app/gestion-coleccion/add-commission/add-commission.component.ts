@@ -3,6 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../../auth.service';  // Asegúrate de que el servicio esté importado correctamente
 import { MatSnackBar } from '@angular/material/snack-bar';  // Para las alertas
 import { Location } from '@angular/common';  // Para navegar hacia atrás
+import { Router } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-add-commission',
@@ -17,7 +21,8 @@ export class AddCommissionComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,  // Servicio para consumir la API
     private snackBar: MatSnackBar,  // Para mostrar mensajes de alerta
-    public location: Location  // Para navegar hacia atrás
+    public location: Location,  // Para navegar hacia atrás
+    private router: Router
   ) {
     // Inicializando el formulario
     this.commissionForm = this.fb.group({
@@ -61,8 +66,8 @@ export class AddCommissionComponent implements OnInit {
             verticalPosition: 'top',
           });
           setTimeout(() => {
-            this.location.back(); // Volver a la página anterior después de 3 segundos
-          }, 3000);
+            this.router.navigate(['/dashboard']); // Volver a la página anterior después de 3 segundos
+          }, 2000);
         },
         (error) => {
           console.error('Error al crear la comisión:', error);

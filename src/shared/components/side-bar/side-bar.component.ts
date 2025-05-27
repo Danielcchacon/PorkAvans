@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2  } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 
 
 export class SideBarComponent {
-  
+
   isClosed = false;
   isTrendsSubmenuOpen = false;
   isAfiliadoSubmenuOpen = false;
@@ -88,6 +88,14 @@ export class SideBarComponent {
       });
   }
 
+  redirectToAddProductSale(): void {
+    this.router.navigate(['/gestion-coleccion/add-product-sale']);
+  }
+
+   redirectToAddCommission(): void {
+    this.router.navigate(['/gestion-coleccion/add-commission']);
+  }
+
   navigateToViewProductsSale() {
     this.router.navigate(['/gestion_afiliado/view-products-sale'])
       .then(() => {
@@ -122,7 +130,7 @@ export class SideBarComponent {
     this.isClosed = !this.isClosed;
     this.isCollapsed = !this.isCollapsed;
   }
-  
+
 
 
   navigateToComidaSuministrada() {
