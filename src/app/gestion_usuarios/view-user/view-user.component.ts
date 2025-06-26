@@ -21,7 +21,8 @@ interface User {  // Definición de la interfaz User
   styleUrls: ['./view-user.component.scss']
 })
 export class ViewUserComponent implements OnInit {
-
+  user: string = '';
+  sidebarVisible: boolean = true;
   displayedColumns: string[] = ['id', 'imagen', 'nombre', 'celularr', 'correo', 'rol', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
   token: string = '';  // Token para la autenticación
@@ -32,6 +33,7 @@ export class ViewUserComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.user = localStorage.getItem('user_id') || '';
     this.token = localStorage.getItem('access_token') || '';
     this.fetchUsuariosAutenticados();
   }

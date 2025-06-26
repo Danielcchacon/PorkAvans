@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2,Output,EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -17,8 +17,12 @@ export class SideBarComponent {
   isAfiliadoSubmenuOpen = false;
   isUsersSubmenuOpen = false;
   isVentasSubmenuOpen = false;
-  isCollapsed = false;
+  isCollapsed = true;
   userRole: string = '';  // Agregar propiedad para el rol
+
+  @Output() toggle = new EventEmitter<boolean>();
+
+
 
   constructor(private router: Router, private el: ElementRef, private renderer: Renderer2) {
     this.getUserRole();  // Obtener el rol del usuario al iniciar el componente
@@ -52,6 +56,8 @@ export class SideBarComponent {
       }
     });
   }
+
+  
 
   getUserRole() {
     const role = localStorage.getItem('user_rol');  // Suponiendo que el rol está guardado en el localStorage
@@ -92,7 +98,7 @@ export class SideBarComponent {
     this.router.navigate(['/gestion-coleccion/add-product-sale']);
   }
 
-   redirectToAddCommission(): void {
+  redirectToAddCommission(): void {
     this.router.navigate(['/gestion-coleccion/add-commission']);
   }
 

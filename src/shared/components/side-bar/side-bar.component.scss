@@ -55,13 +55,13 @@ html {
 }
 
 #page-content-wrapper {
-  position: absolute;
+  position: relative;
   width: 100%;
   padding-top: 70px;
 }
 
 #wrapper.toggled #page-content-wrapper {
-  position: absolute;
+  position: relative;
   margin-right: -220px;
 }
 
