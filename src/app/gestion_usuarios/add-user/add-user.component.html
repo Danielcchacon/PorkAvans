@@ -1,79 +1,86 @@
+<section class="principal">
+  <article class="sidebar">
+    <app-side-bar></app-side-bar>
+  </article>
 
+  <article class="content">
+    <section class="header-fixed">
+      <section class="search-and-user">
+        <div class="banner">
+          <p>Agregar Usuario</p>
+        </div>
 
-        <app-side-bar></app-side-bar>
-        <section class="page-content">
-          <section class="search-and-user">
-            <div class="banner">
-              <p style="align-items: center;">Agregar Usuario</p>
-            </div>
-        
-            <div class="admin-profile">
-              <span class="greeting">Hello admin</span>
-              <div class="notifications">
-                <svg>
-                  <use xlink:href="#users"></use>
-                </svg>
-              </div>
-            </div>
-          </section>
-          
-          <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-            <div class="image-upload-container">
-              <img *ngIf="imageUrl" [src]="imageUrl" alt="Imagen del usuario" class="image-preview" />
-              <input type="file" id="file-input" (change)="onFileSelected($event)" accept="image/*" class="file-input" />
-              <label class="file-input-label" for="file-input">Seleccionar imagen</label>
-            </div>
-        
-            <mat-form-field appearance="fill">
-              <mat-label>Nombre</mat-label>
-              <input matInput formControlName="user_nombre" placeholder="Ingresa el nombre" />
-              <mat-error *ngIf="addUserForm.get('user_nombre')?.invalid && addUserForm.get('user_nombre')?.touched">
-                El nombre es requerido.
-              </mat-error>
-            </mat-form-field>
-        
-            <mat-form-field appearance="fill">
-              <mat-label>Número de Celular</mat-label>
-              <input matInput formControlName="celular" placeholder="Ingresa el número de celular" />
-              <mat-error *ngIf="addUserForm.get('celular')?.invalid && addUserForm.get('celular')?.touched">
-                El celular es requerido y debe ser numérico.
-              </mat-error>
-            </mat-form-field>
-        
-            <mat-form-field appearance="fill">
-              <mat-label>Correo Electrónico</mat-label>
-              <input matInput formControlName="user_email" placeholder="Ingresa el correo" />
-              <mat-error *ngIf="addUserForm.get('user_email')?.invalid && addUserForm.get('user_email')?.touched">
-                Debe ser un correo válido.
-              </mat-error>
-            </mat-form-field>
-        
-            <mat-form-field appearance="fill">
-              <mat-label>Rol</mat-label>
-              <mat-select formControlName="user_rol">
-                <mat-option *ngFor="let rol of roles" [value]="rol.user_rol_id">
-                  {{ rol.rol }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="addUserForm.get('user_rol')?.invalid && addUserForm.get('user_rol')?.touched">
-                El rol es requerido.
-              </mat-error>
-            </mat-form-field>
+        <!-- <div class="admin-profile">
+          <span class="greeting">{{ user }}</span>
+          <div class="notifications">
+            <mat-icon>group</mat-icon>
+          </div>
+        </div> -->
+      </section>
+    </section>
 
-            <mat-form-field appearance="fill">
-              <mat-label>Contraseña</mat-label>
-              <input matInput type="password" formControlName="user_password" placeholder="Ingresa la contraseña" />
-              <mat-error *ngIf="addUserForm.get('user_password')?.invalid && addUserForm.get('user_password')?.touched">
-                La contraseña es requerida.
-              </mat-error>
-            </mat-form-field>
-        
-            <button mat-raised-button type="submit" color="primary" [disabled]="addUserForm.invalid">
-              Agregar Usuario
-            </button>            
-            <button mat-button type="button" (click)="cancel()">Cancelar</button>
-          </form>
-        </section>
-        
+    <section class="page-content scrollable-form">
+      <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()" class="form-container">
+        <!-- Imagen -->
+        <div class="image-upload-container">
+          <img *ngIf="imageUrl" [src]="imageUrl" alt="Imagen del usuario" class="image-preview" />
+          <input type="file" id="file-input" (change)="onFileSelected($event)" accept="image/*" />
+          <label for="file-input" class="file-input-label">Seleccionar imagen</label>
+        </div>
 
+        <!-- Inputs -->
+        <div class="form-fields">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="user_nombre" placeholder="Ingresa el nombre" />
+            <mat-error *ngIf="addUserForm.get('user_nombre')?.invalid && addUserForm.get('user_nombre')?.touched">
+              El nombre es requerido.
+            </mat-error>
+          </mat-form-field>
 
+          <mat-form-field appearance="outline">
+            <mat-label>Número de Celular</mat-label>
+            <input matInput formControlName="celular" placeholder="Ingresa el número de celular" />
+            <mat-error *ngIf="addUserForm.get('celular')?.invalid && addUserForm.get('celular')?.touched">
+              El celular es requerido y debe ser numérico.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput formControlName="user_email" placeholder="Ingresa el correo" />
+            <mat-error *ngIf="addUserForm.get('user_email')?.invalid && addUserForm.get('user_email')?.touched">
+              Debe ser un correo válido.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Rol</mat-label>
+            <mat-select formControlName="user_rol">
+              <mat-option *ngFor="let rol of roles" [value]="rol.user_rol_id">{{ rol.rol }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="addUserForm.get('user_rol')?.invalid && addUserForm.get('user_rol')?.touched">
+              El rol es requerido.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" formControlName="user_password" placeholder="Ingresa la contraseña" />
+            <mat-error *ngIf="addUserForm.get('user_password')?.invalid && addUserForm.get('user_password')?.touched">
+              La contraseña es requerida.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Botones -->
+        <div class="form-actions">
+          <button mat-raised-button type="submit" color="primary" [disabled]="addUserForm.invalid">Agregar
+            Usuario</button>
+          <button mat-stroked-button type="button" (click)="cancel()">Cancelar</button>
+        </div>
+      </form>
+
+    </section>
+  </article>
+</section>

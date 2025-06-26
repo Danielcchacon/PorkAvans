@@ -9,6 +9,7 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent implements OnInit {
+  user: string = '';
   addUserForm!: FormGroup;
   token: string = '';
   imageUrl: string | ArrayBuffer | null = '';
@@ -22,6 +23,7 @@ export class AddUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.user = localStorage.getItem('user_id') || '';
     this.token = localStorage.getItem('access_token') || '';
     this.initForm();
     this.loadRoles();

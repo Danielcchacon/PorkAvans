@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 
 
 export class SideBarComponent {
-
+  user: string = '';
   isClosed = false;
   isTrendsSubmenuOpen = false;
   isAfiliadoSubmenuOpen = false;
@@ -28,6 +28,7 @@ export class SideBarComponent {
     this.getUserRole();  // Obtener el rol del usuario al iniciar el componente
   }
   ngOnInit(): void {
+    this.user = localStorage.getItem('user_id') || '';
     const trigger = this.el.nativeElement.querySelector('.hamburger');
     const overlay = this.el.nativeElement.querySelector('.overlay');
     const toggleBtn = this.el.nativeElement.querySelector('[data-toggle="offcanvas"]');

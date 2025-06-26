@@ -10,6 +10,7 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
+  user: string = '';
   editUserForm!: FormGroup;
   userId!: string;
   token: string = '';
@@ -25,6 +26,7 @@ export class EditUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.user = localStorage.getItem('user_id') || '';
     this.token = localStorage.getItem('access_token') || '';
     this.userId = this.route.snapshot.paramMap.get('id')!;
     this.initForm();
