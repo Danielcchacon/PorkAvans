@@ -1,95 +1,56 @@
-<app-side-bar></app-side-bar>
+<section class="principal">
+  <article class="sidebar">
+    <app-side-bar></app-side-bar>
+  </article>
 
-<body>
-  <section class="page-content">
-    <section class="search-and-user">
-      <div class="banner">
-        <p style="align-items: center;">Productos Recolectados</p>
-        <!-- <button class="close-banner" aria-label="Cerrar banner">&times;</button> -->
-      </div>
-
-      <div class="admin-profile">
-        <span class="greeting">Hello admin</span>
-        <div class="notifications">
-          <span class="badge">1</span>
-          <svg>
-            <use xlink:href="#users"></use>
-          </svg>
-        </div>
-      </div>
-
-
-
-    </section>
-    <!-- <section class="grid"> -->
-    <article class="container">
-      <!-- Contenedor de la barra de búsqueda y el botón -->
-      <div class="search-container">
-        <!-- Campo de búsqueda -->
-        <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
-          placeholder="Buscar...">
-
-        <!-- Botón para abrir el modal -->
-        <button id="agregar-productos" (click)="openModal()">Agregar Producto</button>
-      </div>
-
-      <!-- Mostrar tabla solo si hay datos filtrados -->
-      <div class="datatable" *ngIf="filteredData.length > 0; else noData">
-        <h2>Productos Recolectados</h2>
-        <div data-mdb-datatable-init class="datatable">
-          <table id="exampleTable">
-            <thead>
-              <tr>
-                <th class="th-sm">Distribuidor</th>
-                <th class="th-sm">Fecha de Recolección</th>
-                <th class="th-sm">Cantidad</th>
-                <th class="th-sm">Nombre del Producto</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let producto of pagedData">
-                <td>{{ producto.distribuidor }}</td>
-                <td>{{ producto.fecha_recoleccion }}</td>
-                <td>{{ producto.cantidad_producto }}</td>
-                <td>{{ producto.nombre_producto }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="pagination-controls">
-            <button id="anterior" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-            <span>Page {{ currentPage }} of {{ totalPages }}</span>
-            <button id="siguiente" (click)="goToPage(currentPage + 1)"
-              [disabled]="currentPage === totalPages">Next</button>
+  <article class="content">
+    <section class="page-content">
+      <!-- CABECERA FIJA -->
+      <div class="sticky-header">
+        <section class="search-and-user">
+          <div class="banner">
+            <p>Productos Recolectados</p>
           </div>
+        </section>
+
+        <div class="search-container">
+          <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
+            placeholder="Buscar...">
+          <button id="agregar-productos" (click)="openModal()">Agregar Recolección</button>
         </div>
       </div>
-      <!-- Mensaje cuando no hay datos -->
+
+      <!-- CONTENEDOR DE TABLA SCROLLABLE -->
+      <div class="scrollable-table">
+        <table id="exampleTable">
+          <thead>
+            <tr>
+              <th>Distribuidor</th>
+              <th>Fecha de Recolección</th>
+              <th>Cantidad</th>
+              <th>Nombre del Producto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of pagedData">
+              <td>{{ producto.distribuidor }}</td>
+              <td>{{ producto.fecha_recoleccion }}</td>
+              <td>{{ producto.cantidad_producto }}</td>
+              <td>{{ producto.nombre_producto }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CONTROLES DE PÁGINA -->
+      <mat-paginator [length]="filteredData.length" [pageSize]="itemsPerPage" [pageSizeOptions]="[5, 10, 20, 50]"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+
+
       <ng-template #noData>
         <p>No hay datos para mostrar.</p>
       </ng-template>
-    </article>
-
-  <!-- </section> -->
-
-
-
-
-    <!-- </article> -->
-
-
-
-
-
-    <!-- </section> -->
-    <!-- <footer class="page-footer">
-            <span>Hecho por</span>
-
-        </footer> -->
-
-
-  </section>
-
-
-
-
-</body>
+    </section>
+  </article>
+</section>

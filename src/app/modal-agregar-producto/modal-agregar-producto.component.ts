@@ -1,20 +1,28 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from '../auth.service';
+import { AuthService, Producto } from '../auth.service';
 import Swal from 'sweetalert2';  // Importa SweetAlert2
 
+interface Distributor {
+  distributor_id: number;
+  distributor_name: string;
+  // otros campos que quieras usar si es necesario
+}
 @Component({
   selector: 'app-modal-agregar-producto',
   templateUrl: './modal-agregar-producto.component.html',
   styleUrls: ['./modal-agregar-producto.component.scss']
 })
 export class ModalAgregarProductoComponent {
+  user: string = '';
+  distribuidores: Distributor[] = [];
+  productos: Producto[] = [];
   nuevoProducto: any = {
-    user: '',
-    distribuidor_nombre: '',
-    fecha_recoleccion: '',
-    cantidad_producto: '',    
-    producto_id: ''
+    user: '',                // string
+    distribuidor_nombre: '', // string
+    fecha_recoleccion: '',   // string en formato ISO (por ejemplo: '2024-06-27')
+    cantidad_producto: '',   // string que representa número (ej: "5")
+    producto_id: ''          // string que representa número (ej: "2")
   };
 
   constructor(
@@ -23,11 +31,61 @@ export class ModalAgregarProductoComponent {
     private authService: AuthService  // Inyectar AuthService
   ) { }
 
+
+  // openModal() {
+  //   const dialogRef = this.dialog.open(ModalAgregarProductoComponent, {
+  //     width: '400px',
+  //     data: {}
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       // Si se agregó un nuevo producto, recarga los datos
+  //       this.loadData();
+  //     }
+  //   });
+  // }
+
+
   onCancel(): void {
     this.dialogRef.close();
   }
 
+  ngOnInit(): void {
+    this.user = localStorage.getItem('user_id') || '';
+    this.nuevoProducto.user = this.user;
+
+    this.authService.get_productos().subscribe({
+      next: (response) => {
+        this.productos = response.productos;
+      },
+      error: (err) => {
+        console.error('Error al obtener productos', err);
+      }
+    });
+
+    this.authService.getDistributors().subscribe({
+      next: (res) => {
+        this.distribuidores = res.distributors;
+      },
+      error: (err) => {
+        console.error('Error al obtener distribuidores:', err);
+      }
+    });
+  }
+
   onSubmit(): void {
+    if (this.nuevoProducto.fecha_recoleccion instanceof Date) {
+      const fecha = this.nuevoProducto.fecha_recoleccion;
+      this.nuevoProducto.fecha_recoleccion = fecha.toISOString().split('T')[0]; // YYYY-MM-DD
+    }
+
+    // Asegurar que todos los valores sean texto
+    this.nuevoProducto.user = this.user;
+    this.nuevoProducto.producto_id = String(this.nuevoProducto.producto_id);
+    this.nuevoProducto.cantidad_producto = String(this.nuevoProducto.cantidad_producto);
+    this.nuevoProducto.fecha_recoleccion = String(this.nuevoProducto.fecha_recoleccion);
+    this.nuevoProducto.distribuidor_nombre = String(this.nuevoProducto.distribuidor_nombre);
     console.log('Formulario enviado', this.nuevoProducto);
 
     this.authService.agregarProductoRecolectado(this.nuevoProducto).subscribe({

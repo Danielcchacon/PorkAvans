@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService, ProductoRecolectado, ProductoRecolectadoResponse } from '../auth.service';
 import { ModalAgregarProductoComponent } from '../modal-agregar-producto/modal-agregar-producto.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-recoleccion',
@@ -18,20 +19,40 @@ export class RecoleccionComponent {
   ];
 
   currentPage: number = 1;
-  itemsPerPage: number = 8;
-  searchTerm: string = ''; // Término de búsqueda
+  itemsPerPage: number = 6;
+  searchTerm: string = '';
 
-  data: ProductoRecolectado[] = []; // Datos sin filtrar
-  filteredData: ProductoRecolectado[] = []; // Datos filtrados
+  data: ProductoRecolectado[] = [];
+  filteredData: ProductoRecolectado[] = [];
+  pagedData: ProductoRecolectado[] = [];
+  totalPages: number = 0;
 
-  constructor(private authService: AuthService, public dialog: MatDialog) {}
+  constructor(private authService: AuthService, public dialog: MatDialog) { }
+
+  loadData(): void {
+  this.authService.getProductosRecolectados().subscribe(
+    (response: ProductoRecolectadoResponse) => {
+      if (response && response.productos_recolectados) {
+        this.data = response.productos_recolectados;
+        this.filterData(); // para aplicar el filtro actual
+      } else {
+        console.error('La respuesta no contiene productos recolectados');
+      }
+    },
+    (error: any) => {
+      console.error('Error al obtener productos recolectados', error);
+    }
+  );
+}
 
   ngOnInit(): void {
+    this.loadData();
     this.authService.getProductosRecolectados().subscribe(
       (response: ProductoRecolectadoResponse) => {
         if (response && response.productos_recolectados) {
           this.data = response.productos_recolectados;
-          this.filteredData = this.data; // Inicialmente, los datos filtrados son los mismos que los datos originales
+          this.filteredData = [...this.data];
+          this.updatePagination();
         } else {
           console.error('La respuesta no contiene productos recolectados');
         }
@@ -43,38 +64,51 @@ export class RecoleccionComponent {
   }
 
   openModal() {
-    const dialogRef = this.dialog.open(ModalAgregarProductoComponent, {
-      width: '250px',
-      data: {} // Puedes pasar datos al diálogo si es necesario
-    });
+  const dialogRef = this.dialog.open(ModalAgregarProductoComponent, {
+    width: '400px',
+    data: {}
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Aquí puedes manejar el resultado después de que se cierre el diálogo
-      console.log('The dialog was closed');
-    });
-  }
-
-  get pagedData() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredData.slice(startIndex, startIndex + this.itemsPerPage);
-  }
-
-  get totalPages() {
-    return Math.ceil(this.filteredData.length / this.itemsPerPage);
-  }
+  dialogRef.afterClosed().subscribe((result: any) => {
+    if (result) {
+      this.loadData();  // recarga los datos si se agregó uno nuevo
+    }
+  });
+}
 
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.updatePagedData();
     }
   }
 
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+    this.updatePagedData();
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.itemsPerPage = event.pageSize;
+    this.updatePagedData();
+  }
+
+  updatePagedData() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.pagedData = this.filteredData.slice(start, end);
+  }
+
   filterData() {
-    this.filteredData = this.data.filter(producto => 
+    const search = this.searchTerm.toLowerCase();
+    this.filteredData = this.data.filter(producto =>
       Object.values(producto).some(value =>
-        value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+        value.toString().toLowerCase().includes(search)
       )
     );
-    this.currentPage = 1; // Resetear a la primera página al filtrar
+    this.currentPage = 1;
+    this.updatePagination();
   }
+
 }
