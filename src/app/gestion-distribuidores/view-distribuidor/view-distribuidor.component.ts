@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, Distributor } from '../../auth.service';
+import { PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-view-distribuidor',
@@ -7,37 +10,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewDistribuidorComponent implements OnInit {
 
-  distribuidores = [
-    {
-      image: 'path_to_image1.jpg',
-      distributor_name: 'Distribuidor 1',
-      distributor_address: 'Calle 123, Ciudad',
-      distributor_quarter: 'Centro',
-      cell_phone: '(123) 456-7890',
-      register_date: '2024-11-08T14:30:00',
-      type_distributor: 1,
-      status_distributor: 'ACTIVO',
-      collection_id: 101,
-      status_collection_id: 1
-    },
-    {
-      image: 'path_to_image2.jpg',
-      distributor_name: 'Distribuidor 2',
-      distributor_address: 'Avenida 456, Ciudad',
-      distributor_quarter: 'Sur',
-      cell_phone: '(987) 654-3210',
-      register_date: '2024-10-15T10:15:00',
-      type_distributor: 2,
-      status_distributor: 'INACTIVO',
-      collection_id: 102,
-      status_collection_id: 2
-    }
-    // Agrega más distribuidores aquí
-  ];
+  distribuidores: Distributor[] = [];
 
-  constructor() { }
+  // Variables de paginación
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 15, 20];
+  currentPage = 0;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.loadDistributors();
   }
+
+  loadDistributors(): void {
+    this.authService.getDistributors().subscribe({
+      next: (response) => {
+        this.distribuidores = response.distributors;
+      },
+      error: (error) => {
+        console.error('Error al cargar distribuidores:', error);
+      }
+    });
+  }
+
+  // Método para obtener solo los distribuidores de la página actual
+  get paginatedDistribuidores(): Distributor[] {
+    const start = this.currentPage * this.pageSize;
+    const end = start + this.pageSize;
+    return this.distribuidores.slice(start, end);
+  }
+
+  // Método que se llama cuando se cambia la página o el tamaño de página
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+  }
+
+  getImageSrc(base64: string): string {
+    if (!base64) return '';
+    if (base64.startsWith('/9j/')) {
+      return `data:image/jpeg;base64,${base64}`;
+    } else if (base64.startsWith('iVBORw0KGgo')) {
+      return `data:image/png;base64,${base64}`;
+    } else {
+      return `data:image/jpeg;base64,${base64}`;
+    }
+  }
+
+  verDistribuidor(distribuidor: Distributor): void {
+  console.log('Ver distribuidor:', distribuidor);
+  // Aquí podrías abrir un modal o navegar a una ruta de detalle
+}
+
+editarDistribuidor(distribuidor: Distributor): void {
+  console.log('Editar distribuidor:', distribuidor);
+  // Por ejemplo, podrías redirigir al componente de edición:
+  // this.router.navigate(['/ruta-editar', distribuidor.id]);
+}
+
 
 }

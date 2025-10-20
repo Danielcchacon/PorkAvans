@@ -13,6 +13,25 @@ export interface ComidaSuministrada {
   usuario: string;
 }
 
+//----------------------------------
+//interfaz de fase de crianza
+export interface FaseCrianza {
+  fase_crianza_id: number;
+  nombre_fase: string;
+  descripcion_fase?: string;
+  edad_min_semanas?: number;
+  edad_max_semanas?: number;
+  peso_min_kg?: number;
+  peso_max_kg?: number;
+  consumo_alimento_dia_kg?: number;
+  consumo_agua_dia_litros?: number;
+  ganancia_diaria_gr?: number;
+  tipo_alimento?: string;
+  duracion_dias_estimada?: number;
+  fecha_creacion?: string;
+  creado_por?: string;
+}
+
 //---------------------------------------------
 // Interfaz para la respuesta del endpoint de un solo usuario
 export interface UsuarioData {
@@ -49,6 +68,25 @@ export interface CardData {
   telefono: string | null;
   imagen: string;
   descripcion: string;
+}
+
+//Definicion de lainterface de ver distribuidores 
+export interface Distributor {
+  distributor_id: number;
+  distributor_name: string;
+  distributor_address: string;
+  distributor_quarter: string;
+  status_collection_id: number;
+  collection_id: number;
+  cell_phone: string;
+  register_date: string;
+  type_distributor: number;
+  status_distributor: string;
+  image: string | null;  // base64 string o null
+}
+
+export interface DistributorsResponse {
+  distributors: Distributor[];
 }
 
 interface TarjetasResponse {
@@ -104,6 +142,7 @@ export interface ProductSaleAfiliado {
 
 // Definición de la interfaz para un producto
 export interface Producto {
+  id_producto: number;
   nombre_producto: string;
   precio: string;
   descripcion: string;
@@ -186,6 +225,10 @@ export interface Response {
   data: PreVenta[];
 }
 
+export interface FaseCrianzaListResponse {
+  fases: FaseCrianza[];
+}
+
 
 
 
@@ -194,10 +237,26 @@ export interface Response {
 })
 
 export class AuthService {
-  private apiUrl = 'https://fastapi-porkavans.onrender.com'; // URL del endpoint para obtener el token
+  private apiUrl = 'http://127.0.0.1:8000'; // URL del endpoint para obtener el token
 
   constructor(private http: HttpClient) {
   }
+
+
+  // Método para traer los productos
+  getProducts(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/productos/view_products`);
+  }
+
+  //Metodo para traer las fases de crianza
+  getFasesCrianza(): Observable<FaseCrianzaListResponse> {
+    return this.http.get<FaseCrianzaListResponse>(`${this.apiUrl}/fase_crianza/view_fases_crianza`);
+  }
+
+  addProduct(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/productos/add_product`, payload);
+  }
+
 
   // Método para actualizar el estado de la pre-venta
   changePreSaleStatus(data: any): Observable<any> {
@@ -207,6 +266,11 @@ export class AuthService {
   // Método para obtener las ventas por asociado
   getSales(associateId: string): Observable<Sale[]> {
     return this.http.get<Sale[]>(`${this.apiUrl}/sale_and_presale_router/sales/${associateId}`);
+  }
+
+  //Metodo para obtener todos los distribuidores
+  getDistributors(): Observable<DistributorsResponse> {
+    return this.http.get<DistributorsResponse>(`${this.apiUrl}/distribuidor/view_distributors`);
   }
 
 

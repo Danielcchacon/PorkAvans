@@ -9,37 +9,63 @@
                 </div>
             </div>
 
-            <li><a (click)="navigateToDashboard()">Dashboard</a></li>
+            <li><a (click)="navigateToDashboard()"><i class="material-icons">dashboard</i>Dashboard</a></li>
 
             <li class="nav-item dropdown" *ngIf="userRole && userRole.includes('ADMIN')">
                 <a class="nav-link dropdown-toggle" href="#" role="button"
-                    (click)="toggleUserSubmenu(); $event.preventDefault()">
+                    (click)="toggleUserSubmenu(); $event.preventDefault()"><i class="material-icons">group</i>
                     Gestion de Usuarios
                 </a>
                 <ul *ngIf="isUsersSubmenuOpen" class="dropdown-menu show">
                     <li>
-                        <a class="dropdown-item no-hover" (click)="navigateToViewAdministrador()">Distribuidores</a>
+                        <a class="dropdown-item no-hover" (click)="navigateToViewAdministrador()"><i
+                                class="material-icons">local_shipping</i>Distribuidores</a>
                     </li>
                     <li>
-                        <a class="dropdown-item no-hover" (click)="navigateToViewuser()">Usuarios</a>
+                        <a class="dropdown-item no-hover" (click)="navigateToViewuser()"><i
+                                class="material-icons">person</i> Usuarios</a>
                     </li>
 
                 </ul>
             </li>
 
-
-
-
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" (click)="toggleTrendsSubmenu()" role="button">
-                    Estadisticas
+                    <i class="material-icons">tune</i>Gestion
                 </a>
                 <ul *ngIf="isTrendsSubmenuOpen" class="dropdown-menu show">
-                    <li><a class="dropdown-item" (click)="navigateTorecoleccion()">Productos Recolectados</a></li>
-                    <li><a class="dropdown-item" (click)="navigateToComidaSuministrada()">Comida Suministrada</a></li>
+                    <li><a class="dropdown-item" (click)="navigateTorecoleccion()"><i
+                                class="material-icons">shopping_cart</i>Recolección</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToComidaSuministrada()">
+                            <i class="fa-solid fa-bowl-food"></i>Alimentación</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToStockproductos()">
+                            <i class="fa-solid fa-box-open"></i>Stock</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToViewProducts()">
+                            <i class="fa-solid fa-tag"></i> Productos
+                        </a></li>
 
-                    <li><a class="dropdown-item" (click)="navigateToStockproductos()">Stock</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" (click)="toggleAnimalSubmenu()" role="button">
+                    <i class="fa-solid fa-piggy-bank"></i>
+                    Animales
+                </a>
+                <ul *ngIf="isAnimalSubmenuOpen" class="dropdown-menu show">
+                    <li><a class="dropdown-item" (click)="navigateTorecoleccion()"><i
+                                class="material-icons">recycling</i>Lista Animales</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToComidaSuministrada()"><i
+                                class="material-icons">restaurant</i>Alimentación</a></li>
+
+                    <li><a class="dropdown-item" (click)="navigateToStockproductos()"><i
+                                class="fa-solid fa-box-open"></i>
+
+                            Stock</a></li>
+                    <li><a class="dropdown-item" (click)="navigateToFaseCrianza()"><i
+                                class="fa-solid fa-box-open"></i>
+
+                            Fase crianza</a></li>
                 </ul>
             </li>
 
@@ -47,7 +73,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" (click)="toggleAfiliadoSubmenu(); $event.preventDefault()"
                     role="button">
-                    Afiliado <span class="caret"></span>
+                    <i class="material-icons">group_add</i>Afiliado <span class="caret"></span>
                 </a>
                 <ul *ngIf="isAfiliadoSubmenuOpen" class="dropdown-menu show animated fadeInLeft">
                     <li><a class="dropdown-item" (click)="navigateToAddProductSale()">Catalogo</a></li>
@@ -60,7 +86,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" (click)="toggleVentasSubmenu(); $event.preventDefault()"
                     role="button">
-                    Ventas <span class="caret"></span>
+                    <i class="material-icons">point_of_sale</i>Ventas <span class="caret"></span>
                 </a>
                 <ul *ngIf="isVentasSubmenuOpen" class="dropdown-menu show animated fadeInLeft">
                     <li><a class="dropdown-item" (click)="navigateToViewPresale()">Pre Ventas</a></li>
@@ -72,7 +98,7 @@
 
 
             <!-- <li><a (click)="navigateTocollection()">Colección</a></li> -->
-            <li><a (click)="logout()">Cerrar sesión</a></li>
+            <li><a (click)="logout()"><i class="material-icons">logout</i>Cerrar sesión</a></li>
         </ul>
     </nav>
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service'; // Ajusta la ruta según tu estructura de archivos
 import { DatePipe } from '@angular/common'; // Importa DatePipe
+import { PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-stock',
@@ -17,7 +19,8 @@ export class StockComponent implements OnInit {
   public itemsPerPage: number = 6; // Número de elementos por página
   public totalPages: number = 0;
 
-  constructor(private authService: AuthService, private datePipe: DatePipe) {} // Inyecta DatePipe
+
+  constructor(private authService: AuthService, private datePipe: DatePipe) { } // Inyecta DatePipe
 
   ngOnInit(): void {
     this.loadStockProducts();
@@ -31,7 +34,7 @@ export class StockComponent implements OnInit {
           ...producto,
           fecha_ultima_actualizacion: this.formatDate(producto.fecha_ultima_actualizacion) // Formatea la fecha
         }));
-        
+
         this.filteredData = this.stockProducts; // Inicializa filteredData
         this.updatePagination(); // Actualiza la paginación inicial
       },
@@ -55,9 +58,15 @@ export class StockComponent implements OnInit {
   updatePagedData() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     // Asegúrate de que este slice sea de filteredData
-    this.pagedData = this.filteredData.slice(start, start + this.itemsPerPage); 
+    this.pagedData = this.filteredData.slice(start, start + this.itemsPerPage);
     console.log('Datos paginados:', this.pagedData); // Para verificar qué datos se están mostrando
   }
+  onPageChange(event: PageEvent) {
+    this.itemsPerPage = event.pageSize;
+    this.currentPage = event.pageIndex + 1; // Angular Material indexa desde 0
+    this.updatePagedData(); // Carga los datos de la nueva página
+  }
+
 
   filterData() {
     this.filteredData = this.stockProducts.filter(producto =>

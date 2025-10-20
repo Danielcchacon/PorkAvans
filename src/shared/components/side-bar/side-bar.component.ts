@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class SideBarComponent {
   user: string = '';
   isClosed = false;
+  isAnimalSubmenuOpen = false;
   isTrendsSubmenuOpen = false;
   isAfiliadoSubmenuOpen = false;
   isUsersSubmenuOpen = false;
@@ -58,7 +59,7 @@ export class SideBarComponent {
     });
   }
 
-  
+
 
   getUserRole() {
     const role = localStorage.getItem('user_rol');  // Suponiendo que el rol está guardado en el localStorage
@@ -72,6 +73,9 @@ export class SideBarComponent {
   toggleTrendsSubmenu() {
     this.isTrendsSubmenuOpen = !this.isTrendsSubmenuOpen;
   }
+  toggleAnimalSubmenu() {
+    this.isAnimalSubmenuOpen = !this.isAnimalSubmenuOpen;
+  }
 
   toggleAfiliadoSubmenu() {
     this.isAfiliadoSubmenuOpen = !this.isAfiliadoSubmenuOpen;
@@ -84,6 +88,19 @@ export class SideBarComponent {
   toggleUserSubmenu() {
     this.isUsersSubmenuOpen = !this.isUsersSubmenuOpen;
   }
+
+  navigateToViewProducts() {
+    this.router.navigate(['/products'])
+      .then(() => {
+        console.log('Navegación a /products exitosa.');
+        this.isTrendsSubmenuOpen = false;  // Para cerrar el submenú si quieres
+      })
+      .catch(error => {
+        console.error('Error durante la navegación:', error);
+      });
+  }
+
+
 
   navigateToAddProductSale() {
     this.router.navigate(['/gestion_afiliado/add-product-sale'])
@@ -167,6 +184,18 @@ export class SideBarComponent {
         console.error('Error durante la navegación:', error);
       });
   }
+
+  navigateToFaseCrianza() {
+    this.router.navigate(['/fase-crianza']) 
+      .then(() => {
+        console.log('Navegación a /fase-crianza/view.');
+        this.isTrendsSubmenuOpen = false;
+      })
+      .catch(error => {
+        console.error('Error durante la navegación:', error);
+      });
+  }
+
 
   navigateToViewAdministrador() {
     this.router.navigate(['/gestion-distribuidores/view-administrador'])

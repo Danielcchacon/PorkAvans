@@ -1,0 +1,48 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Nombre:</label>
+    <input formControlName="product_name" />
+  </div>
+
+  <div>
+    <label>Cantidad del Producto:</label>
+    <input type="number" formControlName="product_content" />
+  </div>
+
+  <div>
+    <label>Unidad de medida:</label>
+    <select formControlName="product_unidad_medida">
+      <option value="kg">kg</option>
+      <option value="L">L</option>
+      <option value="ml">ml</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Tipo de producto:</label>
+    <select formControlName="product_type_id">
+      <option *ngFor="let tipo of tiposProductos" [value]="tipo.id">{{ tipo.descripcion }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Precio:</label>
+    <input type="number" formControlName="price" />
+  </div>
+
+  <div class="full-width">
+    <label>Descripción:</label>
+    <textarea formControlName="product_description"></textarea>
+  </div>
+
+  <div class="full-width">
+    <label>Imagen:</label>
+    <input type="file" (change)="onFileSelected($event)" />
+    <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa" class="image-preview" />
+  </div>
+
+  <div class="full-width" style="display: flex; justify-content: space-between;">
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="onCancel()">Cancelar</button>
+  </div>
+</form>

@@ -1,0 +1,274 @@
+.principal {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  .sidebar {
+    width: auto;
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+    background-color: #f1f1f1;
+  }
+
+  .content {
+    flex: 1;
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+    background-color: #fff;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.sidebar-collapsed {
+    .sidebar {
+      width: 0;
+      overflow: hidden;
+    }
+
+    .content {
+      margin-left: 0;
+    }
+  }
+}
+
+$primary-dark: #2c3e50;
+$primary-light: #34495e;
+$white: #fff;
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b2233;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 10px;
+  width: fit-content;
+  margin: 0 auto 20px auto;
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .busqueda {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-right: 20px;
+  }
+
+  #agregar-productos {
+    padding: 10px 20px;
+    background-color: $primary-dark;
+    color: $white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #34495e;
+    }
+  }
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.datatable {
+  width: 100%;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fefefe;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+
+    thead {
+      background-color: $primary-dark;
+      color: $white;
+
+      th {
+        padding: 12px;
+        text-align: left;
+        font-weight: bold;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #ddd;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+
+        td {
+          padding: 12px;
+        }
+      }
+    }
+  }
+}
+
+:host {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+body {
+  overflow-x: auto;
+}
+
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  width: auto !important;
+}
+
+.scrollable-table {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: auto;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+
+  table {
+    min-width: 900px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+
+}
+
+th {
+  background-color: #1b2233;
+  color: white;
+  font-weight: bold;
+}
+
+td.acciones {
+  white-space: nowrap;
+}
+
+td.acciones .acciones-botones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  
+}
+
+.tabla-scroll-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  padding-bottom: 1rem;
+
+  table {
+    width: 100%;
+    min-width: 600px; 
+    border-collapse: collapse;
+  }
+
+  .paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    white-space: normal; 
+  }
+}
+
+.tabla-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  display: block;
+
+  .mi-tabla {
+    min-width: 1000px; 
+    width: auto;
+    border-collapse: collapse;
+  }
+
+  .columna-acciones {
+  white-space: nowrap;
+  min-width: 150px;
+  text-align: center;
+}
+
+
+  .paginacion {
+    min-width: 900px; 
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+
+
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+mat-table {
+  min-width: 600px;
+}
+
+.mat-mdc-header-row {
+  background-color: #1b2233;
+  color: white;
+}

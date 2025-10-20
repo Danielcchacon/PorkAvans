@@ -1,0 +1,77 @@
+<section class="principal">
+    <article class="sidebar">
+        <app-side-bar></app-side-bar>
+    </article>
+
+    <article class="content">
+        <section class="page-content">
+            <section class="search-and-user">
+                <div class="banner">
+                    <p style="align-items: center;">Productos</p>
+                </div>
+            </section>
+
+            <article class="container">
+                <div class="search-container">
+                    <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
+                        placeholder="Buscar..." />
+
+
+                    <button id="agregar-productos" (click)="navigateToAddProduct()">
+                        Agregar Producto
+                    </button>
+                </div>
+
+                <div class="datatable" *ngIf="filteredProducts.length > 0; else noData">
+                    <div data-mdb-datatable-init class="datatable">
+                        <table id="exampleTable">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Contenido Neto</th>
+                                    <th>Tipo</th>
+                                    <th>Precio</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of pagedProducts">
+                                    <td>
+                                        <img *ngIf="product.product_imagen"
+                                            [src]="'data:image/png;base64,' + product.product_imagen" alt="Producto"
+                                            class="product-image" />
+                                        <span *ngIf="!product.product_imagen">Sin imagen</span>
+                                    </td>
+                                    <td>{{ product.product_name }}</td>
+                                    <td>{{ product.contenido_neto }}</td>
+                                    <td>{{ product.tipo_producto }}</td>
+                                    <td>{{ product.price | currency: 'COP':'symbol':'1.0-0' }}</td>
+                                    <td>{{ product.register_date | date: 'yyyy-MM-dd' }}</td>
+                                    <td>
+                                        <button mat-icon-button color="primary" (click)="editarProducto(product)">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="accent" (click)="verProducto(product)">
+                                            <mat-icon>visibility</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <mat-paginator [length]="filteredProducts.length" [pageSize]="itemsPerPage"
+                            [pageSizeOptions]="[6, 10, 25, 50]" (page)="onPageChange($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+
+                <ng-template #noData>
+                    <p>No hay productos para mostrar.</p>
+                </ng-template>
+            </article>
+        </section>
+    </article>
+</section>

@@ -1,0 +1,22 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2 class="titulo">Detalle de Fase</h2>
+  </div>
+
+  <mat-dialog-content class="modal-content">
+    <p><strong>Nombre:</strong> {{ data.nombre_fase }}</p>
+    <p><strong>Descripción:</strong> {{ data.descripcion_fase }}</p>
+    <p><strong>Tipo alimento:</strong> {{ data.tipo_alimento }}</p>
+    <p><strong>Duración estimada (días):</strong> {{ data.duracion_dias_estimada }}</p>
+    <p><strong>Edad mínima (semanas):</strong> {{ data.edad_min_semanas }}</p>
+    <p><strong>Edad máxima (semanas):</strong> {{ data.edad_max_semanas }}</p>
+    <p><strong>Peso mínimo (kg):</strong> {{ data.peso_min_kg }}</p>
+    <p><strong>Peso máximo (kg):</strong> {{ data.peso_max_kg }}</p>
+    <p><strong>Creado por:</strong> {{ data.creado_por }}</p>
+    <p><strong>Fecha creación:</strong> {{ data.fecha_creacion | date }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button class="btn-cerrar" (click)="cerrar()">Cerrar</button>
+  </mat-dialog-actions>
+</div>

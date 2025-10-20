@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';  // Importa SharedMod
 import { ViewDistribuidorComponent } from './view-distribuidor/view-distribuidor.component';
 import { AddDistribuidorComponent } from './add-distribuidor/add-distribuidor.component';
 import { EditDistribuidorComponent } from './edit-distribuidor/edit-distribuidor.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,10 @@ import { EditDistribuidorComponent } from './edit-distribuidor/edit-distribuidor
   imports: [
     CommonModule,
     GestionDistribuidoresRoutingModule,  // Asegúrate de importar las rutas
-    SharedModule  // Importa SharedModule aquí
+    SharedModule,  // Importa SharedModule aquí
+    MatPaginatorModule,
   ]
 })
 export class GestionDistribuidoresModule { }
+export class AppModule {}
+

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-add-user',
@@ -19,7 +21,8 @@ export class AddUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit(): void {
@@ -41,15 +44,18 @@ export class AddUserComponent implements OnInit {
   }
 
   private loadRoles() {
-    this.authService.getRoles(this.token).subscribe({
-      next: (roles) => {
-        this.roles = roles;
-      },
-      error: (error) => {
-        console.error('Error al obtener los roles:', error);
-      }
-    });
-  }
+  this.authService.getRoles(this.token).subscribe({
+    next: (roles) => {
+      this.roles = roles;
+      console.log('Roles obtenidos:', this.roles);
+      this.cdr.detectChanges(); // 👈 Forzar Angular a renderizar
+    },
+    error: (error) => {
+      console.error('Error al obtener los roles:', error);
+    }
+  });
+}
+
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

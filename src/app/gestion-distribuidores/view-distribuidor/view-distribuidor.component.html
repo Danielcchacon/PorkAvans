@@ -1,55 +1,95 @@
 <app-side-bar></app-side-bar>
 <section class="page-content">
-    <section class="search-and-user">
+  <section class="search-and-user">
 
-        <div class="banner">
-            <p style="align-items: center;">Vista de Distribuidores</p>
-        </div>
-        <div class="admin-profile">
-            <span class="greeting">Hello admin</span>
-            <div class="notifications">
-                <svg>
-                    <use xlink:href="#users"></use>
+    <div class="banner">
+      <p style="align-items: center;">Vista de Distribuidores</p>
+    </div>
+    <div class="admin-profile">
+      <span class="greeting">Hello admin</span>
+      <div class="notifications">
+        <svg>
+          <use xlink:href="#users"></use>
+        </svg>
+      </div>
+    </div>
+  </section>
+  <article class="container" style="width: 100%;">
+    <div class="table-container">
+      <h2>Lista de Distribuidores</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Colonia</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <!-- <th>Fecha Registro</th>
+            <th>Tipo</th>-->
+            <th>Acciones</th>
+            <!--<th>Collection ID</th>
+            <th>Status Collection ID</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let distribuidor of paginatedDistribuidores">
+            <td>
+              <ng-container *ngIf="distribuidor.image && distribuidor.image.trim() !== ''; else defaultImage">
+                <img [src]="getImageSrc(distribuidor.image)" alt="Distribuidor" class="table-img">
+              </ng-container>
+              <ng-template #defaultImage>
+                <!-- SVG inline como imagen por defecto -->
+                <svg class="default-avatar" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                  viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="7" r="4"></circle>
+                  <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
                 </svg>
-            </div>
-        </div>
-    </section>
-    <article class="container" style="width: 100%;">
-        <div class="table-container">
-            <h2>Lista de Distribuidores</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Imagen</th>
-                  <th>Nombre</th>
-                  <th>Dirección</th>
-                  <th>Colonia</th>
-                  <th>Teléfono</th>
-                  <th>Fecha Registro</th>
-                  <th>Tipo</th>
-                  <th>Estado</th>
-                  <th>Collection ID</th>
-                  <th>Status Collection ID</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let distribuidor of distribuidores">
-                  <td><img [src]="distribuidor.image" alt="Distribuidor" class="table-img"></td>
-                  <td>{{ distribuidor.distributor_name }}</td>
-                  <td>{{ distribuidor.distributor_address }}</td>
-                  <td>{{ distribuidor.distributor_quarter }}</td>
-                  <td>{{ distribuidor.cell_phone }}</td>
-                  <td>{{ distribuidor.register_date | date: 'yyyy-MM-dd HH:mm' }}</td>
-                  <td>{{ distribuidor.type_distributor === 1 ? 'Mayorista' : 'Minorista' }}</td>
-                  <td [ngClass]="{ 'activo': distribuidor.status_distributor === 'ACTIVO', 'inactivo': distribuidor.status_distributor === 'INACTIVO' }">
-                    {{ distribuidor.status_distributor }}
-                  </td>
-                  <td>{{ distribuidor.collection_id }}</td>
-                  <td>{{ distribuidor.status_collection_id }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-                    
-    </article>
+              </ng-template>
+            </td>
+
+            <td>{{ distribuidor.distributor_name }}</td>
+            <td>{{ distribuidor.distributor_address }}</td>
+            <td>{{ distribuidor.distributor_quarter }}</td>
+            <td>{{ distribuidor.cell_phone }}</td>
+            <!-- <td>{{ distribuidor.register_date | date: 'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ distribuidor.type_distributor === 1 ? 'Mayorista' : 'Minorista' }}</td>-->
+            <td
+              [ngClass]="{ 'activo': distribuidor.status_distributor === 'ACTIVO', 'inactivo': distribuidor.status_distributor === 'INACTIVO' }">
+              {{ distribuidor.status_distributor }}
+            </td>
+            <!--<td>{{ distribuidor.collection_id }}</td>
+            <td>{{ distribuidor.status_collection_id }}</td> -->
+
+            <td class="acciones">
+              <!-- Ver información (icono de ojito) -->
+              <button (click)="verDistribuidor(distribuidor)" class="icon-button" title="Ver">
+                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="3" stroke="#33363F" stroke-width="2" />
+                  <path
+                    d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z"
+                    stroke="#33363F" stroke-width="2" />
+                </svg>
+              </button>
+
+              <!-- Editar (icono de lápiz) -->
+              <button (click)="editarDistribuidor(distribuidor)" class="icon-button" title="Editar">
+                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M8.56078 20.2501L20.5608 8.25011L15.7501 3.43945L3.75012 15.4395V20.2501H8.56078ZM15.7501 5.56077L18.4395 8.25011L16.5001 10.1895L13.8108 7.50013L15.7501 5.56077ZM12.7501 8.56079L15.4395 11.2501L7.93946 18.7501H5.25012L5.25012 16.0608L12.7501 8.56079Z"
+                    fill="#080341" />
+                </svg>
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator [length]="distribuidores.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </div>
+  </article>
 </section>

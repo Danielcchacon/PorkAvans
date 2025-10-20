@@ -31,9 +31,14 @@
               "src/_redirects"
             ],
             "styles": [
+              "src/styles.scss",
+              "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            ],
+            "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
+           
             "scripts": [],
             "allowedCommonJsDependencies": ["apexcharts"]
           },
@@ -93,7 +98,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets" 
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
@@ -109,6 +114,4 @@
   "cli": {
     "analytics": "2d013a65-13ae-4a5a-947b-b569057b626d"
   }
-
-  
 }

@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit {
     
   }
 
-
   ngOnInit(): void {
     this.authService.getGrafica().subscribe(
       (data: GrafData[]) => { // Asumimos que data es un array de GrafData
@@ -79,6 +78,8 @@ export class DashboardComponent implements OnInit {
     const baldeGrandeData: any[] = [];
     const baldePequenoData: any[] = [];
     const baldePequenoGratisData: any[] = [];
+    const purinadeengorde: any[] =[];
+    const purinadelevante: any[] =[];
 
     // Agrupar los datos por tipo de producto y fecha
     const groupedData: { [key: string]: { [key: number]: number } } = graficaData.reduce(
@@ -110,6 +111,10 @@ export class DashboardComponent implements OnInit {
         baldePequenoData.push(...data);
       } else if (productoTipo === 'BALDE PEQUEÑO GRATIS') {
         baldePequenoGratisData.push(...data);
+      }else if (productoTipo === 'PURINA DE ENGORDE'){
+        purinadeengorde.push(...data);
+      }else if (productoTipo === 'PURINA DE LEVANTE'){
+        purinadelevante.push(...data);
       }
     });
 
@@ -134,6 +139,16 @@ export class DashboardComponent implements OnInit {
           name: "Balde Pequeño Gratis",
           type: "column",
           data: baldePequenoGratisData
+        },
+        {
+          name: "Purina de Levante",
+          type: "column",
+          data: purinadelevante
+        },
+        {
+          name: "Purina de Engorde",
+          type: "column",
+          data: purinadeengorde
         }
       ],
       stroke: {

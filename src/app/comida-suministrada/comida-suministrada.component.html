@@ -1,82 +1,74 @@
-<app-side-bar></app-side-bar>
+<section class="principal">
+  <article class="sidebar">
+    <app-side-bar></app-side-bar>
+  </article>
 
-<body>
+  <article class="content">
     <section class="page-content">
-        <section class="search-and-user">
-            <div class="banner">
-                <p style="align-items: center;">Comida Suministra</p>
-                <button class="close-banner" aria-label="Cerrar banner">&times;</button>
-            </div>
+      <section class="search-and-user">
+        <div class="banner">
+          <p style="align-items: center;">Comida Suministrada</p>
+        </div>
+      </section>
 
-            <div class="admin-profile">
-                <span class="greeting">Hello admin</span>
-                <div class="notifications">
-                    <span class="badge">1</span>
-                    <svg>
-                        <use xlink:href="#users"></use>
-                    </svg>
-                </div>
-            </div>
+      <article class="container">
+        <div class="search-container">
+          <input
+            class="busqueda"
+            type="text"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="filterData()"
+            placeholder="Buscar..."
+          />
 
+          <select [(ngModel)]="selectedCorral" (change)="filterData()">
+            <option value="">Todos los corrales</option>
+            <option *ngFor="let corral of comidasSuministradas | uniqueCorrales" [value]="corral">
+              Corral {{ corral }}
+            </option>
+          </select>
 
+          <input type="date" [(ngModel)]="selectedDate" (change)="filterData()" />
 
-        </section>
-        <!-- <section class="grid"> -->
-            <article class="container">
-                <!-- Contenedor de la barra de búsqueda y el botón -->
-                <div class="search-container">
-                    <!-- Campo de búsqueda -->
-                    <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
-                        placeholder="Buscar...">
+          <button id="agregar-productos" (click)="openModal()">Suministrar comida</button>
+        </div>
 
-                    <!-- Botón para abrir el modal -->
-                    <button id="agregar-productos" (click)="openModal()">Agregar Comida</button>
-                </div>
+        <div class="datatable" *ngIf="filteredData.length > 0; else noData">
+          <div data-mdb-datatable-init class="datatable">
+            <table id="exampleTable">
+              <thead>
+                <tr>
+                  <th>Corral</th>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Suministrada</th>
+                  <th>Usuario</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let comida of pagedData">
+                  <td>Corral {{ comida.corral_id }}</td>
+                  <td>{{ comida.producto }}</td>
+                  <td>{{ comida.cantidad }}</td>
+                  <td>{{ comida.fecha_suministro | date: 'yyyy-MM-dd HH:mm' }}</td>
+                  <td>{{ comida.usuario }}</td>
+                </tr>
+              </tbody>
+            </table>
 
-                <!-- Mostrar tabla solo si hay datos filtrados -->
-                <div class="datatable" *ngIf="filteredData.length > 0; else noData">
-                    <h2>Comida Suministra</h2>
-                    <div data-mdb-datatable-init class="datatable">
-                        <table id="exampleTable">
-                            <thead>
-                                <tr>
-                                    <th class="th-sm">Corral</th>
-                                    <th class="th-sm">Producto</th>
-                                    <th class="th-sm">Cantidad</th>
-                                    <th class="th-sm">Fecha Suministrada</th>
-                                    <th class="th-sm">Usuario</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let comida of pagedData">
-                                    <td>{{ comida.corral_id }}</td>
-                                    <td>{{ comida.producto }}</td>
-                                    <td>{{ comida.cantidad }}</td>
-                                    <td>{{ comida.fecha_suministro | date: 'yyyy-MM-dd HH:mm' }}</td>
-                                    <td>{{ comida.usuario }}</td>
-                                </tr>
-                            </tbody>
+            <mat-paginator
+              [length]="filteredData.length"
+              [pageSize]="itemsPerPage"
+              [pageSizeOptions]="[6, 10, 25, 50]"
+              (page)="onPageChange($event)">
+            </mat-paginator>
+          </div>
+        </div>
 
-                        </table>
-                        <div class="pagination-controls">
-                            <button id="anterior" (click)="goToPage(currentPage - 1)"
-                                [disabled]="currentPage === 1">Previous</button>
-                            <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                            <button id="siguiente" (click)="goToPage(currentPage + 1)"
-                                [disabled]="currentPage === totalPages">Next</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Mensaje cuando no hay datos -->
-                <ng-template #noData>
-                    <p>No hay datos para mostrar.</p>
-                </ng-template>
-            </article>
-
-        <!-- </section> -->
+        <ng-template #noData>
+          <p>No hay datos para mostrar.</p>
+        </ng-template>
+      </article>
     </section>
-    <footer class="page-footer">
-        <span>Hecho por</span>
-
-    </footer>
-</body>
+  </article>
+</section>

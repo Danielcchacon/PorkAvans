@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from '../auth.service';
-import Swal from 'sweetalert2'; 
+import { AuthService, Producto } from '../auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-comida-suministrada',
@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./modal-comida-suministrada.component.scss']
 })
 export class ModalComidaSuministradaComponent {
+  user: string = '';
+  productos: Producto[] = [];
   nuevoProducto = {
     user: '',
     corral_id: 0,
@@ -21,6 +23,19 @@ export class ModalComidaSuministradaComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthService  // Inyectar AuthService
   ) { }
+
+  ngOnInit(): void {
+    this.user = localStorage.getItem('user_id') || '';
+    this.nuevoProducto.user = this.user;
+    this.authService.get_productos().subscribe({
+      next: (response) => {
+        this.productos = response.productos;
+      },
+      error: (err) => {
+        console.error('Error al obtener productos', err);
+      }
+    });
+  }
 
   onCancel(): void {
     this.dialogRef.close();

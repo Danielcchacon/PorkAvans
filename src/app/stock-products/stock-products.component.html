@@ -1,59 +1,52 @@
-<app-side-bar></app-side-bar>
-
-<body>
-  <section class="page-content">
-    <section class="search-and-user">
-      <div class="banner">
-        <p style="align-items: center;">Stock de Productos</p>
-      </div>
-
-      <div class="admin-profile">
-        <span class="greeting">Hello admin</span>
-        <div class="notifications">
-          <span class="badge">1</span>
-          <svg>
-            <use xlink:href="#users"></use>
-          </svg>
+<section class="principal">
+  <article class="sidebar">
+    <app-side-bar></app-side-bar>
+  </article>
+  <article class="content">
+    <section class="page-content">
+      <section class="search-and-user">
+        <div class="banner">
+          <p style="align-items: center;">Stock de Productos</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <article class="container" style="width: 100%;"> <!-- Asegúrate de que el contenedor tenga 100% de ancho -->
+      <article class="container" style="width: 100%;"> <!-- Asegúrate de que el contenedor tenga 100% de ancho -->
         <div class="search-container">
-            <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
-                placeholder="Buscar producto...">
+          <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
+            placeholder="Buscar producto...">
+          <!-- <button class="btn-agregar" (click)="openModal()">Agregar Producto</button> -->
         </div>
-    
+
+
         <div class="datatable" *ngIf="filteredData.length > 0; else noData">
-            <h2>Stock de Productos</h2>
-            <table id="stockTable">
-                <thead>
-                    <tr>
-                        <th class="th-sm">Nombre</th>
-                        <th class="th-sm">Cantidad</th>
-                        <th class="th-sm">Contenido</th>
-                        <th class="th-sm">Fecha de Ingreso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let producto of pagedData">
-                        <td>{{ producto.product_name }}</td>
-                        <td>{{ producto.cantidad_producto }}</td>
-                        <td>{{ producto.contenido_neto }}</td>
-                        <td>{{ producto.fecha_ultima_actualizacion }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="pagination-controls">
-                <button id="anterior" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
-                <span>Página {{ currentPage }} de {{ totalPages }}</span>
-                <button id="siguiente" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
-            </div>
+          <table id="stockTable">
+            <thead>
+              <tr>
+                <th class="th-sm">Nombre</th>
+                <th class="th-sm">Cantidad</th>
+                <th class="th-sm">Contenido</th>
+                <th class="th-sm">Fecha de Actualización</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of pagedData">
+                <td>{{ producto.product_name }}</td>
+                <td>{{ producto.cantidad_producto }}</td>
+                <td>{{ producto.contenido_neto }}</td>
+                <td>{{ producto.fecha_ultima_actualizacion }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator [length]="filteredData.length" [pageSize]="itemsPerPage" [pageSizeOptions]="[6, 10, 25, 50]"
+            (page)="onPageChange($event)">
+          </mat-paginator>
+
+
         </div>
         <ng-template #noData>
-            <p>No hay productos en stock.</p>
+          <p>No hay productos en stock.</p>
         </ng-template>
-    </article>
-    
-  </section>
-</body>
+      </article>
+    </section>
+  </article>
+</section>

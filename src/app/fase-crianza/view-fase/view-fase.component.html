@@ -1,0 +1,96 @@
+<section class="principal">
+    <article class="sidebar">
+        <app-side-bar></app-side-bar>
+    </article>
+
+    <article class="content">
+        <section class="page-content">
+            <section class="search-and-user">
+                <div class="banner">
+                    <p style="align-items: center;">Fases de Crianza</p>
+                </div>
+            </section>
+
+            <article class="container">
+                <div class="search-container">
+                    <input class="busqueda" type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterData()"
+                        placeholder="Buscar..." />
+
+                    <button id="agregar-productos" (click)="navigateToAddFase()">
+                        Agregar Fase
+                    </button>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table mat-table [dataSource]="pagedFases" class="mat-elevation-z8">
+                        <!-- Nombre -->
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let fase"> {{ fase.nombre_fase }} </td>
+                        </ng-container>
+
+                        <!-- Descripción -->
+                        <ng-container matColumnDef="descripcion">
+                            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                            <td mat-cell *matCellDef="let fase"> {{ fase.descripcion_fase }} </td>
+                        </ng-container>
+
+                        <!-- Tipo alimento -->
+                        <ng-container matColumnDef="tipo">
+                            <th mat-header-cell *matHeaderCellDef> Tipo alimento </th>
+                            <td mat-cell *matCellDef="let fase"> {{ fase.tipo_alimento }} </td>
+                        </ng-container>
+
+                        <!-- Duración -->
+                        <ng-container matColumnDef="duracion">
+                            <th mat-header-cell *matHeaderCellDef> Duración(días) </th>
+                            <td mat-cell *matCellDef="let fase"> {{ fase.duracion_dias_estimada }} </td>
+                        </ng-container>
+
+                        <!-- Creado por -->
+                        <ng-container matColumnDef="creado_por">
+                            <th mat-header-cell *matHeaderCellDef> Creado por </th>
+                            <td mat-cell *matCellDef="let fase"> {{ fase.creado_por }} </td>
+                        </ng-container>
+
+                        <!-- Fecha creación -->
+                        <ng-container matColumnDef="fecha">
+                            <th mat-header-cell *matHeaderCellDef> Fecha creación </th>
+                            <td mat-cell *matCellDef="let fase"> {{ fase.fecha_creacion | date }} </td>
+                        </ng-container>
+
+                        <!-- Acciones -->
+                        <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                            <td mat-cell *matCellDef="let fase" class="acciones">
+                                <div class="acciones-botones">
+                                    <button mat-icon-button color="primary" (click)="verFase(fase)">
+                                        <mat-icon>visibility</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="accent" (click)="editarFase(fase)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="warn" (click)="eliminarFase(fase)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row
+                            *matHeaderRowDef="['nombre', 'descripcion', 'tipo', 'duracion', 'creado_por', 'fecha', 'acciones']">
+                        </tr>
+                        <tr mat-row
+                            *matRowDef="let row; columns: ['nombre', 'descripcion', 'tipo', 'duracion', 'creado_por', 'fecha', 'acciones']">
+                        </tr>
+                    </table>
+                </div>
+                <mat-paginator [length]="filteredFases.length" [pageSize]="itemsPerPage"
+                    [pageSizeOptions]="[4, 10, 25, 50]" (page)="onPageChange($event)">
+                </mat-paginator>
+                <ng-template #noData>
+                    <p>No hay fases para mostrar.</p>
+                </ng-template>
+            </article>
+        </section>
+    </article>
+</section>
